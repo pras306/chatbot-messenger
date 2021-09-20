@@ -9,6 +9,7 @@ const router = express.Router();
 router.post("/", (req, res) => {
     const { name, email, password, isGoogleSignIn } = req.body;
 
+    console.log(name, email, password);
     if(!email) {
         return res.status(400).json({ Error: "Incorrect form submission" });
     }

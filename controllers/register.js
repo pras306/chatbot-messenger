@@ -8,6 +8,8 @@ const router = express.Router();
 
 router.post("/", (req, res) => {
     const { name, email, password } = req.body;
+
+    console.log(name, email, password);
     
     if(!email || !name || !password) {
         return res.status(400).json({ Error: "Incorrect Form submission" });
