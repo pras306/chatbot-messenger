@@ -26,7 +26,6 @@ const Register = (props) => {
     const { handleSubmit, signIn } = props;
 
     const onRegister = (formValues) => {
-        console.log(formValues);
         fetch(`${CHAT_REGISTER}`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },

@@ -6,14 +6,14 @@ const db = require("../config/connection");
 const router = express.Router();
 
 
-router.post("/", async (req, res) => {
+router.post("/", (req, res) => {
     const { name, email, password } = req.body;
     
     if(!email || !name || !password) {
         return res.status(400).json({ Error: "Incorrect Form submission" });
     }
 
-    const hash_pwd = await bcrypt.hash(password, 10);
+    const hash_pwd = bcrypt.hashSync(password, 10);
 
     db("users")
     .returning([ "name", "email" ])
