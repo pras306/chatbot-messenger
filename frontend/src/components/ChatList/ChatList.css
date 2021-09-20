@@ -1,0 +1,18 @@
+.chat-list {
+    width: 100%;
+    height: 76vh;
+    background-color: var(--bgc-white);
+    overflow: scroll;
+    scrollbar-width: none;
+    padding: 0.5em;
+    border-bottom-left-radius: 20px;
+}
+
+.chat-list::-webkit-scrollbar {
+    display: none;
+}
+
+.chat-list__selected {
+    background-color: var(--bgc-background);
+    cursor: default !important;
+}

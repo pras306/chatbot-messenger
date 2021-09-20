@@ -1,0 +1,12 @@
+.chat-rooms {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chat-rooms__chats, .chat-rooms__messages {
+    width: 50%;
+    height: 100%;
+}

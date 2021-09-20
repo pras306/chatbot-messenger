@@ -1,0 +1,120 @@
+.message-box {
+    height: 100%;
+    padding-bottom: 0.2em;
+    margin-left: 1em;
+    display: flex;
+    flex-direction: column;
+}
+
+.message-box__header {
+    height: 10vh;
+    padding: 0.5em;
+    background-color: var(--bgc-white);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.message-box__header__title {
+    font-family: var(--ff-montserrat-med);
+    font-size: 1.5rem;
+    padding: 0.5em;
+}
+
+.message-box__header__time {
+    align-self: flex-end;
+    padding: 0.3em;
+}
+
+.message-box__content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    scrollbar-width: none;
+}
+
+.message-box__content::-webkit-scrollbar {
+    display: none;
+}
+
+.message-box__content__message__container {
+    min-width: 15vw;
+    padding: 0.75em;
+    margin: 0.3em;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    border-radius: 20px;
+    background-color: var(--bgc-white);
+}
+
+.message-box__content__message__sender {
+    align-self: flex-start;
+    font-weight: bolder;
+    color: var(--bgc-green);
+    font-family: var(--ff-roboto);
+    font-size: 0.8rem;
+}
+
+.message-box__content__message {
+    align-self: flex-start;
+    padding-top: 0.5em;
+}
+
+.message-box__content__message-time {
+    align-self: flex-end;
+    font-size: 0.75rem;
+    font-weight: bold;
+    padding-left: 1.5em;
+    padding-right: 0.5em;
+}
+
+.message-box__content__left {
+    align-self: flex-start;
+}
+
+.message-box__content__right {
+    align-self: flex-end;
+}
+
+.message-box__content__loader {
+    padding: 0 1em;
+    background-color: darkgray;
+    margin-left: auto;
+    margin-right: 1em;
+    margin-bottom: 1em;
+    border-radius: 20px;
+    animation: blinker 5s infinite ease;
+}
+
+.message-box__footer {
+    height: 10vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-top: 2px solid black;
+}
+
+.message-box__footer__input {
+    flex: 1;
+    padding: 1em;
+    margin-left: 0.3em;
+    border-radius: 20px;
+    outline: none;
+    border: none;
+    font-family: var(--ff-roboreg);
+}
+
+.message-box__footer__button {
+    color: black !important;
+}
+
+@keyframes blinker {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
