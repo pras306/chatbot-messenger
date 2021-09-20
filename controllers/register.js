@@ -28,9 +28,9 @@ router.post("/", (req, res) => {
     })
     .catch( err => {
         if(err.detail.includes("already exists")) {
-            res.status(400).json({ Error: "Email is used by another user" });
+            res.status(400).json({ Error: err });
         } else {
-            res.status(400).json({ Error: "Unable to register user" });
+            res.status(400).json({ Error: err });
         }
     })
 });

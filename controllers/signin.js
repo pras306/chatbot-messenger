@@ -50,14 +50,14 @@ router.post("/", (req, res) => {
                     res.json(user[0])
                 })
                 .catch( err => {
-                    res.status(400).json({ Error: "Unable to sign in user currently. Please try again later." });
+                    res.status(400).json({ Error: err });
                 });
             } else {
                 res.json(data[0])
             }
         })
         .catch(err => {
-            res.status(400).json({ Error: "Unable to sign in user currently. Please try again later." });
+            res.status(400).json({ Error: err });
         });
     }
 
