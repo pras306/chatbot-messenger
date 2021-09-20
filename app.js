@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const path = require("path");
 
-const api = require(path.join(__dirname, "api"));
+const api = require(path.join(__dirname, "api/index"));
 
 const app = express();
 
