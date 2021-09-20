@@ -1,9 +1,10 @@
 const express = require("express");
+const path = require("path");
 
-const signin = require("../controllers/signin");
-const register = require("../controllers/register");
-const rooms = require("../controllers/rooms");
-const messages = require("../controllers/messages");
+const signin = require(path.join(__dirname, "../controllers/signin"));
+const register = require(path.join(__dirname, "../controllers/register"));
+const rooms = require(path.join(__dirname, "../controllers/rooms"));
+const messages = require(path.join(__dirname, "../controllers/messages"));
 
 const router = express.Router();
 
