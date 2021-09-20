@@ -8,8 +8,6 @@ const router = express.Router();
 
 router.post("/", (req, res) => {
     const { name, email, password } = req.body;
-
-    console.log(name, email, password);
     
     if(!email || !name || !password) {
         return res.status(400).json({ Error: "Incorrect Form submission" });
@@ -30,9 +28,9 @@ router.post("/", (req, res) => {
     })
     .catch( err => {
         if(err.detail.includes("already exists")) {
-            res.status(400).json({ Error: err });
+            res.status(400).json({ Error: "Email is used by another user." });
         } else {
-            res.status(400).json({ Error: err });
+            res.status(400).json({ Error: "Unable to register user. Please try again later." });
         }
     })
 });

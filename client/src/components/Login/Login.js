@@ -58,8 +58,7 @@ const Login = (props) => {
         .then((result) => {
             fetch(`${CHAT_SIGNIN}`, {
                 method: "POST",
-                headers: { 
-                    Accept: "application/json",
+                headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({

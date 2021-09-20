@@ -9,7 +9,6 @@ const router = express.Router();
 router.post("/", (req, res) => {
     const { name, email, password, isGoogleSignIn } = req.body;
 
-    console.log(name, email, password);
     if(!email) {
         return res.status(400).json({ Error: "Incorrect form submission" });
     }
@@ -51,14 +50,14 @@ router.post("/", (req, res) => {
                     res.json(user[0])
                 })
                 .catch( err => {
-                    res.status(400).json({ Error: err });
+                    res.status(400).json({ Error: "Unable to sign in user. Please try again later." });
                 });
             } else {
                 res.json(data[0])
             }
         })
         .catch(err => {
-            res.status(400).json({ Error: err });
+            res.status(400).json({ Error: "Unable to sign in user. Please try again later." });
         });
     }
 

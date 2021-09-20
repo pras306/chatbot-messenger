@@ -28,8 +28,7 @@ const Register = (props) => {
     const onRegister = (formValues) => {
         fetch(`${CHAT_REGISTER}`, {
             method: "POST",
-            headers: { 
-                Accept: "application/json",
+            headers: {
                 "Content-Type": "application/json" 
             },
             body: JSON.stringify({
