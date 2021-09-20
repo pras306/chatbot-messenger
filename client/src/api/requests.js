@@ -1,4 +1,4 @@
-const BASE_URL = "https://chat-bot-messenger-app.herokuapp.com/";
+const BASE_URL = "https://chat-bot-messenger-app.herokuapp.com";
 
 export const CHAT_SIGNIN = `${BASE_URL}/api/users/signin`;
 export const CHAT_REGISTER = `${BASE_URL}/api/users/register`;
