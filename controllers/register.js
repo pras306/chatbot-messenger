@@ -14,8 +14,6 @@ router.post("/", (req, res) => {
     }
 
     const hash_pwd = bcrypt.hashSync(password, 10);
-    console.log(process.env.DATABASE_URL);
-    console.log('db:', db);
 
     db("users")
     .returning([ "name", "email" ])
