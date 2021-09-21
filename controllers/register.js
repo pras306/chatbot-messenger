@@ -15,7 +15,6 @@ router.post("/", (req, res) => {
 
     const hash_pwd = bcrypt.hashSync(password, 10);
 
-    console.log(name, email, hash_pwd, db);
 
     db("users")
     .returning([ "name", "email" ])
@@ -26,9 +25,11 @@ router.post("/", (req, res) => {
         is_google_signin: false
     })
     .then(name => {
+        console.log(name);
         res.json(name[0]);
     })
     .catch( err => {
+        console.log(err);
         if(err.detail.includes("already exists")) {
             res.status(400).json({ Error: "Email is used by another user." });
         } else {
