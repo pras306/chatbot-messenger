@@ -7,6 +7,8 @@ const rooms = require(path.join(__dirname, "./controllers/rooms"));
 const messages = require(path.join(__dirname, "./controllers/messages"));
 
 
+console.log(path.join(__dirname, "./controllers/register"));
+
 const router = express.Router();
 
 router.get("/", (req, res) => {

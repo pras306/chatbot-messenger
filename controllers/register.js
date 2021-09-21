@@ -15,6 +15,8 @@ router.post("/", (req, res) => {
 
     const hash_pwd = bcrypt.hashSync(password, 10);
 
+    console.log(name, email, hash_pwd, db);
+
     db("users")
     .returning([ "name", "email" ])
     .insert({
@@ -32,7 +34,7 @@ router.post("/", (req, res) => {
         } else {
             res.status(400).json({ Error: "Unable to register user. Please try again later." });
         }
-    })
+    });
 });
 
 module.exports = router;
