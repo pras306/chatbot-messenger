@@ -6,6 +6,7 @@ const options = process.env.NODE_ENV === 'production' ? {
     connection: process.env.DATABASE_URL,
     searchPath: ['public'],
     ssl: {
+        require: true,
         rejectUnauthorized: false
       }
 } : {
