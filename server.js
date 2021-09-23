@@ -28,12 +28,12 @@ if(process.env.NODE_ENV === "production") {
 
 app.use("/api", api);
 
-//Handle basic routing errors
-app.use((req, res, next) => {
-    const error = new Error('Not Found');
-    error.status = 404;
-    next(error);
-});
+// //Handle basic routing errors
+// app.use((req, res, next) => {
+//     const error = new Error('Not Found');
+//     error.status = 404;
+//     next(error);
+// });
 
 //Handle errors thrown from anywhere else in the app
 app.use((err, req, res, next) => {
