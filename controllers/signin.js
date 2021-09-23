@@ -4,13 +4,15 @@ const bcrypt = require("bcrypt");
 const db = require("../config/connection");
 
 const router = express.Router();
+const error = new Error();
 
-
-router.post("/", (req, res) => {
+router.post("/", (req, res, next) => {
     const { name, email, password, isGoogleSignIn } = req.body;
 
     if(!email) {
-        return res.status(400).json({ Error: "Incorrect form submission" });
+        error.message = "Incorrect form submission";
+        error.status = 400;
+        next(error);
     }
 
     if(!isGoogleSignIn) {
@@ -25,13 +27,21 @@ router.post("/", (req, res) => {
                 .then(user => {
                     res.json(user[0]);
                 })
-                .catch(err => res.status(400).json({ Error: "User not found" }));
+                .catch(err => {
+                    error.message = "User not found";
+                    error.status = 400;
+                    next(error);
+                });
             } else {
-                return res.status(400).json({ Error: "Email and Password do not match" });
+                error.message = "Email and Password do not match.";
+                error.status = 400;
+                next(error);
             }
         })
         .catch(err => {
-            res.status(400).json({ Error: "User not found" });
+            error.message = "User not found";
+            error.status = 400;
+            next(error);
         });
     } else {
         db.select("name", "email").from("users")
@@ -50,14 +60,18 @@ router.post("/", (req, res) => {
                     res.json(user[0])
                 })
                 .catch( err => {
-                    res.status(400).json({ Error: "Unable to sign in user. Please try again later." });
+                    error.message = "Unable to signin user. Please try again later.";
+                    error.status = 400;
+                    next(error);
                 });
             } else {
                 res.json(data[0])
             }
         })
         .catch(err => {
-            res.status(400).json({ Error: "Unable to sign in user. Please try again later." });
+            error.message = "Unable to signin user. Please try again later.";
+            error.status = 400;
+            next(error);
         });
     }
 

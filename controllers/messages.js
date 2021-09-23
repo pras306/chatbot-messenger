@@ -3,12 +3,13 @@ const express = require("express");
 const db = require("../config/connection");
 
 const router = express.Router();
+const error = new Error();
 
 router.get("/", (req, res) => {
     res.json([]);
 });
 
-router.get("/:roomName", (req, res) => {
+router.get("/:roomName", (req, res, next) => {
     const roomName = req.params.roomName;
 
     const subQuery = db.select("room_id").from("rooms").where("room_name", "=", roomName);
@@ -20,10 +21,14 @@ router.get("/:roomName", (req, res) => {
     .then(data => {
         res.json(data);
     })
-    .catch(err => res.status(400).json({ Error: "Unable to get messages from server. Please try again later." }));
+    .catch(err => {
+        error.message = "Unable to get any messages for the current chat room. Please try again later.";
+        error.status = 400;
+        next(error);
+    });
 });
 
-router.post("/", (req,res) => {
+router.post("/", (req, res, next) => {
     const { email, roomName, message } = req.body;
 
     const userQuery = db.select("id").from("users").where("email", "=", email);
@@ -40,7 +45,11 @@ router.post("/", (req,res) => {
     .then(data => {
         res.json({roomName: roomName, message_time: data[0]});
     })
-    .catch(err => res.status(400).json({ Error: "Unable to send messages at the moment. Please try again later." }))
+    .catch(err => {
+        error.message = "Unable to send messages in this chat room currently. Please try again later.";
+        error.status = 400;
+        next(error);
+    });
 });
 
 module.exports = router;

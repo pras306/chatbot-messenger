@@ -4,12 +4,13 @@ const express = require("express");
 const db = require("../config/connection");
 
 const router = express.Router();
+const error = new Error();
 
 router.get("/", (req, res) => {
     res.json([]);
 });
 
-router.get("/:email", (req, res) => {
+router.get("/:email", (req, res, next) => {
     const email = req.params.email;
 
     const userQuery = db.select("id").from("users").where("email", "=", email);
@@ -27,10 +28,14 @@ router.get("/:email", (req, res) => {
             res.json(rooms);
         }
     })
-    .catch(err => res.status(400).json({ Error: "Unable to find any chat rooms for the current user" }));
+    .catch(err => {
+        error.message = "Unable to find any chat rooms for the current user.";
+        error.status = 400;
+        next(error);
+    });
 });
 
-router.post("/", (req, res) => {
+router.post("/", (req, res, next) => {
     const { roomName, email } = req.body;
 
     const subQuery = db.select("id").from("users").where("email", "=", email);
@@ -46,14 +51,18 @@ router.post("/", (req, res) => {
     })
     .catch(err => {
         if(err.detail.includes("already exists")) {
-            res.status(400).json({ Error: "Room Name is used by another user" });
+            error.message = "Room Name is used by another user.";
+            error.status = 400;
+            next(error);
         } else {
-            res.status(400).json({ Error: "Unable to find any chat rooms for the current user" });
+            error.message = "Unable to find nay chat rooms for the current user.";
+            error.status = 400;
+            next(error);
         }
     });
 });
 
-router.delete("/:roomName", (req, res) => {
+router.delete("/:roomName", (req, res, next) => {
     const roomName = req.params.roomName;
 
     db("rooms")
@@ -62,7 +71,11 @@ router.delete("/:roomName", (req, res) => {
     .then(response => {
         res.json({ Success: `${response} Room was successfully deleted.` });
     })
-    .catch(err => res.status(400).json({ Error: "Unable to delete room. Please try again later" }));
+    .catch(err => {
+        error.message = "Unable to find any rooms to delete for the current user.";
+        error.status = 400;
+        next(error);
+    });
 });
 
 module.exports = router;
