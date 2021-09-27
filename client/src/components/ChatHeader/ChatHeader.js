@@ -7,24 +7,27 @@ import { connect } from 'react-redux';
 import './ChatHeader.css';
 import history from '../../history';
 import { auth } from '../../api/firebase';
-import { signOut, getChatDetails, getChatMessages, getChatRooms } from '../../actions';
+import { signOut, getChatDetails, getChatMessages, getChatRooms, setLoader } from '../../actions';
 import { CHAT_ROOMS } from '../../api/requests';
 
-const ChatHeader = ({ user, chats, signOut, getChatDetails, getChatMessages, getChatRooms }) => {
+const ChatHeader = ({ user, chats, signOut, getChatDetails, getChatMessages, getChatRooms, setLoader }) => {
     const[open, setOpen] = useState(false);
     const[roomName, setRoomName] = useState("");
 
     const onSignOut = () => {
         if(user){
             try {
+                setLoader(true);
                 signOut();
                 auth.signOut();
                 getChatDetails(null);
                 getChatMessages('');
                 getChatRooms('');
                 history.push('/');
+                setLoader(false);
             } catch(err) {
                 alert(err.message);
+                setLoader(false);
             }
         }
     };
@@ -38,6 +41,7 @@ const ChatHeader = ({ user, chats, signOut, getChatDetails, getChatMessages, get
     };
 
     const createRoom = () => {
+        setLoader(true);
         fetch(`${CHAT_ROOMS}`, {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
@@ -50,12 +54,17 @@ const ChatHeader = ({ user, chats, signOut, getChatDetails, getChatMessages, get
         .then(data => {
             if(data.error) {
                 alert(data.error.message);
+                setLoader(false);
             } else {
                 getChatRooms(user.user.email);
                 handleClose();
+                setLoader(false);
             }
         })
-        .catch(err => alert("Unable to create a new room. Please try again later."));
+        .catch(err => {
+            setLoader(false);
+            alert("Unable to create a new room. Please try again later.")
+        });
         setRoomName('');
     };
 
@@ -63,20 +72,26 @@ const ChatHeader = ({ user, chats, signOut, getChatDetails, getChatMessages, get
         if(!chats.chatDetails) {
             alert("Please select a room that you want to delete.");
         } else {
+            setLoader(true);
             fetch(`${CHAT_ROOMS}${chats.chatDetails.chatName}`,{
                 method: "DELETE"
             })
             .then(response => response.json())
             .then(data => {
                 if(data.error) {
+                    setLoader(false);
                     alert(data.error.message);
                 } else {
                     alert(data.data.message);
                     getChatRooms(user.user.email);
                     getChatDetails(null);
+                    setLoader(false);
                 }
             })
-            .catch(err => alert("Unable to delete the room. Please try again later."));
+            .catch(err => {
+                setLoader(false);
+                alert("Unable to delete the room. Please try again later.")
+            });
         }
     };
 
@@ -131,5 +146,5 @@ const mapStateToProps = state => {
 
 export default connect(
     mapStateToProps,
-    { signOut, getChatDetails, getChatMessages, getChatRooms }
+    { signOut, getChatDetails, getChatMessages, getChatRooms, setLoader }
 )(ChatHeader);

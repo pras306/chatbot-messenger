@@ -38,3 +38,10 @@ export const getChatMessages = (roomName) => {
         dispatch({ type: actionTypes.GET_CHAT_MESSAGES, payload: response.data.data });
     }
 };
+
+export const setLoader = (load) => {
+    return {
+        type: actionTypes.SET_LOADER,
+        payload: load
+    }
+}

@@ -1,0 +1,30 @@
+.loader {
+    position: absolute;
+    background-color: #00000090;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.loader__image {
+    animation: spinner 4s infinite forwards ease;
+}
+
+.loader__text {
+    font-family: var(--ff-roboto);
+    font-size: 2rem;
+    color: var(--bgc-white-smoke);
+    text-transform: uppercase;
+}
+
+@keyframes spinner {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

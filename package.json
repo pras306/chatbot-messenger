@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "Chatbot Messenger Backend",
   "main": "server.js",
+  "engines": {
+    "node": "16.9.0",
+    "npm": "7.22.0"
+  },
   "scripts": {
     "start": "node server.js",
     "dev": "concurrently \"nodemon server.js\" \"cd client && npm start\"",

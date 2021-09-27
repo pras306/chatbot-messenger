@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 import './Register.css';
 import history from '../../history';
-import { signIn } from '../../actions';
+import { signIn, setLoader } from '../../actions';
 import { CHAT_REGISTER } from '../../api/requests';
 
 const required = value => !value ? "Required Field" : undefined;
@@ -23,9 +23,10 @@ const renderForm = ({ input, type, placeholder, meta: { touched, error } }) => {
 };
 
 const Register = (props) => {
-    const { handleSubmit, signIn } = props;
+    const { handleSubmit, signIn, setLoader } = props;
 
     const onRegister = (formValues) => {
+        setLoader(true);
         fetch(`${CHAT_REGISTER}`, {
             method: "POST",
             headers: {
@@ -40,6 +41,7 @@ const Register = (props) => {
         .then(response => response.json())
         .then(user => {
             if(user.error) {
+                setLoader(false);
                 alert(user.error.message);
             } else {
                 signIn({
@@ -48,9 +50,13 @@ const Register = (props) => {
                     avatar: `https://robohash.org/${Math.random() * 200}?size=200x200`
                 });
                 history.push('/rooms');
+                setLoader(false);
             }
         })
-        .catch(err => alert(err.message));
+        .catch(err => {
+            setLoader(false);
+            alert(err.message);
+        });
     }
 
     return (
@@ -84,7 +90,7 @@ const mapStateToProps = state => {
 
 const decoratedComponent = connect(
     mapStateToProps,
-    { signIn }
+    { signIn, setLoader }
 )(Register);
 
 export default reduxForm({

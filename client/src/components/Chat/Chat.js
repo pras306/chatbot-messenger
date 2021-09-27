@@ -2,14 +2,21 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import './Chat.css';
-import { getChatDetails, getChatMessages } from '../../actions';
+import { getChatDetails, getChatMessages, setLoader } from '../../actions';
 
 const Chat = (props) => {
-    const { selected, chatName, chatTime, getChatDetails, getChatMessages } = props;
+    const { selected, chatName, chatTime, getChatDetails, getChatMessages, setLoader } = props;
 
     const onChatClick = () => {
-        getChatDetails({ chatName: chatName, chatTime: chatTime});
-        getChatMessages(chatName);
+        try {
+            setLoader(true);
+            getChatDetails({ chatName: chatName, chatTime: chatTime});
+            getChatMessages(chatName);
+            setLoader(false);
+        } catch(err) {
+            alert(err.message);
+            setLoader(false);
+        }
     }
 
     return (
@@ -28,5 +35,5 @@ Chat.defaultProps = {
 
 export default connect(
     null,
-    { getChatDetails, getChatMessages }
+    { getChatDetails, getChatMessages, setLoader }
 )(Chat);

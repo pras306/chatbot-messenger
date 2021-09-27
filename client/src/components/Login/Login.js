@@ -8,7 +8,7 @@ import './Login.css';
 import GSignIn from '../../assets/images/GoogleSignIn.png';
 import history from '../../history';
 import { auth, provider } from '../../api/firebase';
-import { signIn } from '../../actions';
+import { signIn, setLoader } from '../../actions';
 import { CHAT_SIGNIN } from '../../api/requests';
 
 const required = value => !value ? "Required Field" : undefined;
@@ -25,9 +25,10 @@ const renderForm = ({ input, type, placeholder, meta: { touched, error } }) => {
 };
 
 const Login = (props) => {
-    const { handleSubmit, signIn } = props;
+    const { handleSubmit, signIn, setLoader } = props;
 
     const onLogin = (formValues) => {
+        setLoader(true);
         fetch(`${CHAT_SIGNIN}`,{
             method: "POST",
             headers: { "Content-Type": "application/json"},
@@ -40,6 +41,7 @@ const Login = (props) => {
         .then(response => response.json())
         .then( user => {
             if(user.error) {
+                setLoader(false);
                 alert(user.error.message);
             } else {
                 signIn({
@@ -48,12 +50,17 @@ const Login = (props) => {
                     avatar: `https://robohash.org/${Math.random() * 200}?size=200x200`
                 });
                 history.push('/rooms');
+                setLoader(false);
             }
         })
-        .catch(err => alert(err.message));
+        .catch(err => {
+            setLoader(false);
+            alert(err.message);
+        });
     }
 
     const onGSignIn = () => {
+        setLoader(true);
         auth.signInWithPopup(provider)
         .then((result) => {
             fetch(`${CHAT_SIGNIN}`, {
@@ -71,6 +78,7 @@ const Login = (props) => {
             .then(response => response.json())
             .then(user => {
                 if(user.error) {
+                    setLoader(false);
                     alert(user.error.message);
                 } else {
                     signIn({
@@ -79,11 +87,18 @@ const Login = (props) => {
                         avatar: `https://robohash.org/${Math.random() * 200}?size=200x200`
                     });
                     history.push('/rooms');
+                    setLoader(false);
                 }
             })
-            .catch(err => alert(err.message));
+            .catch(err => {
+                setLoader(false);
+                alert(err.message);
+            });
         })
-        .catch(err => alert(err.message));
+        .catch(err => {
+            setLoader(false);
+            alert(err.message);
+        });
     }
 
     return (
@@ -115,7 +130,7 @@ const mapStateToProps = state => {
 
 const decoratedComponent = connect(
     mapStateToProps,
-    { signIn }
+    { signIn, setLoader }
 )(Login);
 
 export default reduxForm({
