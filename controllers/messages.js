@@ -6,7 +6,10 @@ const router = express.Router();
 const error = new Error();
 
 router.get("/", (req, res) => {
-    res.json([]);
+    res.json({
+        message: "No user was selected. Only Admin can view all the chat messages.",
+        data: []
+    });
 });
 
 router.get("/:roomName", (req, res, next) => {
@@ -19,7 +22,10 @@ router.get("/:roomName", (req, res, next) => {
     .where("messages.room_id", "in", subQuery)
     .orderBy("messages.message_time")
     .then(data => {
-        res.json(data);
+        res.json({
+            message: `${data.length} messages were found in the chat room: ${roomName}`,
+            data: data
+        });
     })
     .catch(err => {
         error.message = "Unable to get any messages for the current chat room. Please try again later.";
@@ -43,7 +49,10 @@ router.post("/", (req, res, next) => {
         message_time: new Date()
     })
     .then(data => {
-        res.json({roomName: roomName, message_time: data[0]});
+        res.json({
+            message: `Successfully added the message in the room: ${roomName}`,
+            data: {roomName: roomName, message_time: data[0]}
+        });
     })
     .catch(err => {
         error.message = "Unable to send messages in this chat room currently. Please try again later.";

@@ -15,7 +15,7 @@ const Chat = (props) => {
     return (
         <div className={`chat ${selected ? "chat-list__selected" : ""}`} onClick={() => onChatClick()}>
             <span className="chat__title">{chatName}</span>
-            <span className="chat__time">{new Date(chatTime).toDateString()}</span>
+            <span className="chat__time">{chatTime ? new Date(chatTime).toDateString() : "No Messages Sent"}</span>
         </div>
     );
 }

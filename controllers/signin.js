@@ -25,7 +25,10 @@ router.post("/", (req, res, next) => {
                 db.select("name", "email").from("users")
                 .where("email", "=", email)
                 .then(user => {
-                    res.json(user[0]);
+                    res.json({
+                        message: "User was signed in successfully",
+                        data: user[0]
+                    });
                 })
                 .catch(err => {
                     error.message = "User not found";
@@ -57,7 +60,10 @@ router.post("/", (req, res, next) => {
                     is_google_signin: true
                 })
                 .then(user => {
-                    res.json(user[0])
+                    res.json({
+                        message: "User was signed in successfully",
+                        data: user[0]
+                    });
                 })
                 .catch( err => {
                     error.message = "Unable to signin user. Please try again later.";

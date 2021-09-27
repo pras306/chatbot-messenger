@@ -39,12 +39,12 @@ const Login = (props) => {
         })
         .then(response => response.json())
         .then( user => {
-            if(user.Error) {
-                alert(user.Error);
+            if(user.error) {
+                alert(user.error.message);
             } else {
                 signIn({
-                    name: user.name,
-                    email: user.email,
+                    name: user.data.name,
+                    email: user.data.email,
                     avatar: `https://robohash.org/${Math.random() * 200}?size=200x200`
                 });
                 history.push('/rooms');
@@ -70,12 +70,12 @@ const Login = (props) => {
             })
             .then(response => response.json())
             .then(user => {
-                if(user.Error) {
-                    alert(user.Error);
+                if(user.error) {
+                    alert(user.error.message);
                 } else {
                     signIn({
-                        name: user.name,
-                        email: user.email,
+                        name: user.data.name,
+                        email: user.data.email,
                         avatar: `https://robohash.org/${Math.random() * 200}?size=200x200`
                     });
                     history.push('/rooms');

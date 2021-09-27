@@ -16,12 +16,16 @@ const ChatHeader = ({ user, chats, signOut, getChatDetails, getChatMessages, get
 
     const onSignOut = () => {
         if(user){
-            signOut();
-            auth.signOut();
-            getChatDetails(null);
-            getChatMessages('');
-            getChatRooms('');
-            history.push('/');
+            try {
+                signOut();
+                auth.signOut();
+                getChatDetails(null);
+                getChatMessages('');
+                getChatRooms('');
+                history.push('/');
+            } catch(err) {
+                alert(err.message);
+            }
         }
     };
 
@@ -44,8 +48,8 @@ const ChatHeader = ({ user, chats, signOut, getChatDetails, getChatMessages, get
         })
         .then(response => response.json())
         .then(data => {
-            if(data.Error) {
-                alert(data.Error);
+            if(data.error) {
+                alert(data.error.message);
             } else {
                 getChatRooms(user.user.email);
                 handleClose();
@@ -64,14 +68,15 @@ const ChatHeader = ({ user, chats, signOut, getChatDetails, getChatMessages, get
             })
             .then(response => response.json())
             .then(data => {
-                if(data.Error) {
-                    alert(data.Error);
+                if(data.error) {
+                    alert(data.error.message);
                 } else {
-                    alert(data.Success);
+                    alert(data.data.message);
                     getChatRooms(user.user.email);
                     getChatDetails(null);
                 }
             })
+            .catch(err => alert("Unable to delete the room. Please try again later."));
         }
     };
 

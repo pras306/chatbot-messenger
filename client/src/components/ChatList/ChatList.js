@@ -8,7 +8,11 @@ import { getChatRooms } from '../../actions';
 const ChatList = ({ user, rooms, chats, getChatRooms }) => {
 
     useEffect(() => {
-        getChatRooms(user.user.email);        
+        try {
+            getChatRooms(user.user.email);
+        } catch(err) {
+            alert(err.message);
+        }
     }, [user, getChatRooms]);
 
     const renderChats = rooms.chatRooms.length > 0 ? rooms.chatRooms.map((room, idx) => {

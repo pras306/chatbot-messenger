@@ -7,7 +7,10 @@ const router = express.Router();
 const error = new Error();
 
 router.get("/", (req, res) => {
-    res.json([]);
+    res.json({
+        message: "No user was selected. Only Admin can view all the chat rooms.",
+        data: []
+    });
 });
 
 router.get("/:email", (req, res, next) => {
@@ -23,9 +26,15 @@ router.get("/:email", (req, res, next) => {
     .groupBy("rooms.room_name")
     .then(rooms => {
         if(rooms.length <= 0){
-            return res.json([]);
+            return res.json({
+                message: "No user was selected. Please select a user for viewing their rooms/chats.",
+                data: []
+            });
         } else {
-            res.json(rooms);
+            res.json({
+                message: `There were ${rooms.length} chat room(s) found for the user: ${email}`,
+                data: rooms
+            });
         }
     })
     .catch(err => {
@@ -47,7 +56,10 @@ router.post("/", (req, res, next) => {
         room_name: roomName
     })
     .then(room => {
-        res.json(room);
+        res.json({
+            message: `New Chat Room: ${roomName} was created.`,
+            data: room
+        });
     })
     .catch(err => {
         if(err.detail.includes("already exists")) {
@@ -69,7 +81,10 @@ router.delete("/:roomName", (req, res, next) => {
     .where("room_name", roomName)
     .delete()
     .then(response => {
-        res.json({ Success: `${response} Room was successfully deleted.` });
+        res.json({
+            message: `Successfully deleted ${response} room(s).`,
+            data: response
+        });
     })
     .catch(err => {
         error.message = "Unable to find any rooms to delete for the current user.";

@@ -69,7 +69,11 @@ const MessageBox = ({ user, chats, getChatMessages, getChatDetails, getChatRooms
         }
     };
 
-    const sendMessage = async () => {
+    const sendMessage = async (e) => {
+        if(e) {
+            e.preventDefault();
+        }
+        
         if(!chats.chatDetails) {
             alert("Please select a room to send messages");
             setMessage("");
@@ -89,43 +93,47 @@ const MessageBox = ({ user, chats, getChatMessages, getChatDetails, getChatRooms
             }
         };
 
-        const response = await axios.post(`${CHAT_MESSAGES}`, data, config);
-        getChatMessages(response.data.roomName);
-        setMessage("");
-        getChatRooms(user.user.email);
-        getChatDetails({ chatName: chats.chatDetails.chatName, chatTime: response.data.message_time });
+        try {
+            const response = await axios.post(`${CHAT_MESSAGES}`, data, config);
+            getChatMessages(response.data.data.roomName);
+            setMessage("");
+            getChatRooms(user.user.email);
+            getChatDetails({ chatName: chats.chatDetails.chatName, chatTime: response.data.data.message_time });
 
-        setLoader(true);
-        const botQuery = await axios.post(`${CHATBOT_API}`,JSON.stringify({
-            query: sentMssg
-        }));
+            setLoader(true);
+            const botQuery = await axios.post(`${CHATBOT_API}`,JSON.stringify({
+                query: sentMssg
+            }));
 
-        const botResponse = await axios.post(`${CHAT_MESSAGES}`, JSON.stringify({
-            email: "chat@bot.com",
-            roomName: chats.chatDetails.chatName,
-            message: botQuery.data.response
-        }), {
-            headers: {
-                'Content-Type' : 'application/json'
-            }
-        });
+            const botResponse = await axios.post(`${CHAT_MESSAGES}`, JSON.stringify({
+                email: "chat@bot.com",
+                roomName: chats.chatDetails.chatName,
+                message: botQuery.data.response
+            }), {
+                headers: {
+                    'Content-Type' : 'application/json'
+                }
+            });
 
-        getChatMessages(botResponse.data.roomName);
-        getChatRooms(user.user.email);
-        getChatDetails({ chatName: chats.chatDetails.chatName, chatTime: botResponse.data.message_time });
-        setLoader(false);
+            getChatMessages(botResponse.data.data.roomName);
+            getChatRooms(user.user.email);
+            getChatDetails({ chatName: chats.chatDetails.chatName, chatTime: botResponse.data.data.message_time });
+            setLoader(false);
+        } catch(err) {
+            alert(err);
+        }
     };
 
     return (
         <div className="message-box">
             {renderTitle()}
             {renderMessages()}
-            <div className="message-box__footer">
+            <form className="message-box__footer" onSubmit={(e) => sendMessage(e)}>
                 <input className="message-box__footer__input" type="text" placeholder="Type your message here..." value={message} onChange={(e) => setMessage(e.target.value)} />
                 <IconButton className="message-box__footer__button" onClick={sendMessage}>
                     <Send />
                 </IconButton>
-            </div>
+            </form>
         </div>
     )
 };

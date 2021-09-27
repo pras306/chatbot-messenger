@@ -26,11 +26,13 @@ router.post("/", (req, res, next) => {
         password: hash_pwd,
         is_google_signin: false
     })
-    .then(name => {
-        res.json(name[0]);
+    .then(user => {
+        res.json({
+            message: "User was signed in successfully",
+            data: user[0]
+        });
     })
     .catch( err => {
-        console.log(err);
         if(err.detail.includes("already exists")) {
             error.message = "Email is used by another user.";
             error.status = 400;

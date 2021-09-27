@@ -25,16 +25,16 @@ export const getChatDetails = (chat) => {
 
 export const getChatRooms = (email) => {
     return async (dispatch) => {
-        const response = await axios.get(`${CHAT_ROOMS}${email}`);
+        const response = await axios.get(`${CHAT_ROOMS}/${email}`);
 
-        dispatch({ type: actionTypes.GET_CHAT_ROOMS, payload: response.data });
+        dispatch({ type: actionTypes.GET_CHAT_ROOMS, payload: response.data.data });
     }
 };
 
 export const getChatMessages = (roomName) => {
     return async (dispatch) => {
-        const response = await axios.get(`${CHAT_MESSAGES}${roomName}`);
-        
-        dispatch({ type: actionTypes.GET_CHAT_MESSAGES, payload: response.data });
+        const response = await axios.get(`${CHAT_MESSAGES}/${roomName}`);
+
+        dispatch({ type: actionTypes.GET_CHAT_MESSAGES, payload: response.data.data });
     }
 };
