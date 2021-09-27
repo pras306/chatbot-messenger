@@ -71,7 +71,10 @@ router.post("/", (req, res, next) => {
                     next(error);
                 });
             } else {
-                res.json(data[0])
+                res.json({
+                    message: "User was signed in successfully",
+                    data: data[0]
+                });
             }
         })
         .catch(err => {

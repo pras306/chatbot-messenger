@@ -26,10 +26,8 @@ if(process.env.NODE_ENV === "production") {
 app.use("/api", api);
 
 //Handle basic routing errors
-app.use((req, res, next) => {
-    const error = new Error('Not Found');
-    error.status = 404;
-    next(error);
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, "client/build/pagenotfound.html"));
 });
 
 //Handle errors thrown from anywhere else in the app
