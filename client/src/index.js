@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
-import { logger } from 'redux-logger';
 import thunk from 'redux-thunk';
 
 import './index.css';
@@ -11,7 +10,7 @@ import reducers from './reducers';
 import { loadState, saveState } from './localStorage';
 
 const persistedState = loadState();
-const store = createStore(reducers, persistedState, applyMiddleware(thunk, logger));
+const store = createStore(reducers, persistedState, applyMiddleware(thunk));
 
 store.subscribe(() => {
   saveState({
