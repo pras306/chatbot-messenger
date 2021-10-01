@@ -11,7 +11,7 @@
     height: 60vh;
     background: var(--bgc-white);
     display: flex;
-    flex-flow: column wrap;
+    flex-flow: column;
     justify-content: space-between;
     align-items: center;
 }
@@ -74,7 +74,7 @@
 }
 
 .login__form__image {
-    width: 250px;
+    width: 10vw;
     padding: 0.5em;
     cursor: pointer;
     transition: transform 0.4s ease;
@@ -93,4 +93,55 @@
 .login__form__footer__link, .login__form__footer__link:visited {
     text-decoration: none;
     color: dodgerblue;
+}
+
+@media screen and (max-width: 1200px) {
+    .login__form {
+        width: 40vw;
+    }
+
+    .login__form__content__input {
+        width: 30vw;
+    }
+
+    .login__form__image, .login__form__button {
+        width: 20vw;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .login__form {
+        width: 60vw;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .login__form {
+        width: 80vw;
+    }
+
+    .login__form__content__input {
+        width: 50vw;
+    }
+
+    .login__form__image, .login__form__button {
+        width: 30vw;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .login__form__image {
+        width: 40vw;
+    }
+}
+
+@media screen and (max-height: 576px) and (orientation: landscape) {
+    .login {
+        align-items: flex-start;
+    }
+
+    .login__form {
+        height: 80vh;
+        overflow-x: scroll;
+    }
 }

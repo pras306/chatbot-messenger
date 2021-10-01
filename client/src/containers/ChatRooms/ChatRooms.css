@@ -10,3 +10,20 @@
     width: 50%;
     height: 100%;
 }
+
+@media screen and (max-width: 768px) {
+    .chat-rooms {
+        overflow-x: scroll;
+        overflow-y: hidden;
+    }
+
+    .chat-rooms__chats, .chat-rooms__messages {
+        min-width: 75%;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .chat-rooms__chats, .chat-rooms__messages {
+        min-width: 100%;
+    }
+}

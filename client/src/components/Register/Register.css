@@ -83,3 +83,52 @@
     text-decoration: none;
     color: dodgerblue;
 }
+
+@media screen and (max-width: 1200px) {
+    .register__form {
+        width: 40vw;
+    }
+
+    .register__form__content__input {
+        width: 30vw;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .register__form {
+        width: 60vw;
+    }
+
+    .register__form__content__input {
+        width: 40vw;
+    }
+
+    .register__form__button {
+        width: 30vw;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .register__form {
+        width: 80vw;
+    }
+
+    .register__form__content__input {
+        width: 50vw;
+    }
+
+    .register__form__button {
+        width: 40vw;
+    }
+}
+
+@media screen and (max-height: 576px) and (orientation: landscape) {
+    .register {
+        align-items: flex-start;
+    }
+
+    .register__form {
+        height: 80vh;
+        overflow-x: scroll;
+    }
+}
