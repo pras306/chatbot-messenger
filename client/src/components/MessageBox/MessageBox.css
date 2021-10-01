@@ -118,3 +118,18 @@
         opacity: 1;
     }
 }
+
+@media screen and (max-width: 576px) {
+    .message-box__header {
+        min-height: 10vh;
+    }
+
+    .message-box__header__title {
+        font-size: 1rem;
+        font-weight: bolder;
+    }
+
+    .message-box__header__time {
+        align-self: flex-start;
+    }
+}

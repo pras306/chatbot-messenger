@@ -44,3 +44,9 @@
 .chat-header__actions__button:hover {
     background-color: var(--bgc-green) !important;
 }
+
+@media screen and (max-width: 576px) {
+    .chat-header__container > span {
+        font-size: 1.5rem;
+    }
+}
