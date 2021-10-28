@@ -16,7 +16,7 @@ The API for interacting with database that stores all information related to the
 
 The Front End for this application is published at [Chatbot Messenger](https://chat-bot-messenger-app.herokuapp.com/) <br />
 
-To know more information about the front end, refer [Client folder](client/src/README.md)
+To know more information about the front end, refer [Client folder](client/README.md)
 
 #### Technologies
 
