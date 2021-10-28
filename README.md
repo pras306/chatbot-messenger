@@ -68,8 +68,7 @@ Start the server and client
 
 ## API Routes
 
-[Production Base URL](https://chat-bot-messenger-app.herokuapp.com)
-[Local Dev Base URL](http://localhost:5000)
+Production Base URL - [https://chat-bot-messenger-app.herokuapp.com](https://chat-bot-messenger-app.herokuapp.com)
 
 #### POST - Sign in user 
 
